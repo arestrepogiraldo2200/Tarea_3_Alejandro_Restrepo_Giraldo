@@ -92,10 +92,10 @@ class Oscilador():
                w = np.sqrt(k/j)
                # Posición y momento (para este sistema P = mv = m dx/dt)
                X = self.x_0*np.cos(w*t) + (self.v_0/w)*np.sin(w*t)
-               P = -self.x_0*j*w*np.sin(w*t) + self.v_0*j*np.cos(w*t)
+               P = -self.x_0*w*np.sin(w*t) + self.v_0*np.cos(w*t)
                # Gráfica y formato
                ax.plot(X, P)
-               ax.set(title = "Espacio de fase", xlabel = "x(t) [m]", ylabel = "p(t) [kg m/s]")
+               ax.set(title = "Espacio de fase", xlabel = "x(t) [m]", ylabel = "v(t) [m/s]")
                plt.legend(['k = 1' +'\n' +'m = 1 ', 'k = 2 \n m = 1 ', 'k = 3 \n m = 1 ', 'k = 1 \n m = 2 ', 'k = 3 \n m = 2 ', 'k = 1 \n m = 3 ', 'k = 2 \n m = 3 '])
 
       # Se guarda la figura
@@ -194,8 +194,8 @@ class OsciladorAmortiguado():
       for j in param:
          # Solución numérica
          sol = odeint(Sistema, X_0, t, args=(j[0], j[1], j[2]))
-         ax.plot(sol[:,0], j[0]*sol[:,1])
-         ax.set(title = "Espacio de fase", xlabel = "x(t) [m]", ylabel = "p(t) [kg m/s]")
+         ax.plot(sol[:,0], sol[:,1])
+         ax.set(title = "Espacio de fase", xlabel = "x(t) [m]", ylabel = "v(t) [m/s]")
          plt.legend(['m = 1 \n k = 1 \n b = 1', 'm = 1 \n k = 3 \n b = 2.3', 'm = 10 \n k = 3 \n b = 2', 'm = 10 \n k = 12 \n b = 2.3', 'm = 15 \n k = 3 \n b = 3'])
 
       # Se guarda la figura
@@ -207,12 +207,3 @@ class OsciladorAmortiguado():
 
 
 
-
-
-sys = OsciladorAmortiguado(1.0,-2.0)
-sys.Xvst()
-sys.PhaseSpace()
-
-sys = Oscilador(1.0,-2.0)
-sys.Xvst()
-sys.PhaseSpace()
